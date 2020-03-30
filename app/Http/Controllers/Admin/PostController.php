@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Post;
 use Illuminate\Http\Request;
@@ -16,8 +16,11 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {   
+        // se ho più users devo utilizzare il where dove possono vedere solo i loro post
+        $posts = Post::where('user_id',\Auth::id())->get();
+
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
