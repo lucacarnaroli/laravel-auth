@@ -17,6 +17,7 @@ Route::get('/', function () {
     return view('guest.welcome');
 });
 
+
 Auth::routes();
 
 Route::get('/posts', 'PostController@index')->name('posts.index');
