@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
+
 class PostController extends Controller
 {
     // SOLO PER ADMIN
@@ -32,7 +33,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -43,7 +44,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title'=>'required|string|max:100',
+            'body'=>'required|string|max:1000',
+        ]);
+        $data = $request->all();
+
+        $post = new Post;
+        $post->fill($data);
+        $post->user_id = Auth::id();
+        $post->slug = Str::finish(Str::slug($post->title), rand(1, 10000));
+        $post->save();
+        return redirect()->route('admin.posts.index');
     }
 
     /**
@@ -66,7 +78,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit',compact('post'));
     }
 
     /**
@@ -77,8 +89,20 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Post $post)
-    {
-        //
+    {   
+        // update è simile a store però non va inserito il new: perchè andrebbe in contrasto con la funzione upadte()
+        $request->validate([
+            'title' => 'required|string|max:100',
+            'body' => 'required|string|max:1000',
+        ]);
+        $data = $request->all();
+
+        // $post = new Post;
+        $post->fill($data);
+        $post->user_id = Auth::id();
+        $post->slug = Str::finish(Str::slug($post->title), rand(1, 10000));
+        $post->update($data);
+        return redirect()->route('admin.posts.index');
     }
 
     /**
