@@ -23,7 +23,9 @@ Auth::routes();
 Route::get('/posts', 'PostController@index')->name('posts.index');
 
 Route::get('/show/{slug}', 'PostController@show')->name('posts.show');
-Route::get('/create', 'CommentController@show')->name('comment.create');
+// Route::post('/create', 'CommentController@show')->name('comment.create');
+Route::post('/store', 'CommentController@store')->name('comment.store');
+
 
 Route::name('admin.')->prefix('admin')->namespace('Admin')->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
