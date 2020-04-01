@@ -34,8 +34,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        $tags = Tag::all();
 
+        $tags = Tag::all();
         return view('admin.posts.create',compact('tags'));
     }
 
@@ -52,12 +52,20 @@ class PostController extends Controller
             'body'=>'required|string|max:1000',
         ]);
         $data = $request->all();
-
+            
         $post = new Post;
         $post->fill($data);
         $post->user_id = Auth::id();
         $post->slug = Str::finish(Str::slug($post->title), rand(1, 10000));
+
         $post->save();
+        
+            $tags = $data['tags'];
+            if (!empty($tags)) {
+                $post->tags()->attach($tags);
+            }
+            // al posto di attach posso usare anche sync()
+        
         return redirect()->route('admin.posts.index');
     }
 
@@ -81,7 +89,13 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit',compact('post'));
+        $tags = Tag::all();
+        $data = [
+            'tags' => $tags,
+            'post' => $post
+        ];
+
+        return view('admin.posts.edit', $data);
     }
 
     /**
@@ -105,6 +119,11 @@ class PostController extends Controller
         $post->user_id = Auth::id();
         $post->slug = Str::finish(Str::slug($post->title), rand(1, 10000));
         $post->update($data);
+
+        $tags = $data['tags'];
+        if (!empty($tags)) {
+            $post->tags()->attach($tags);
+        }
         return redirect()->route('admin.posts.index');
     }
 
@@ -120,6 +139,8 @@ class PostController extends Controller
             abort('404'); 
         }
         $post->delete();
+
+        $post->tags()->detach();
         return redirect()->route('admin.posts.index');
     }
 }
