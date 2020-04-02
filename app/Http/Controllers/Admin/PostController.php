@@ -64,7 +64,7 @@ class PostController extends Controller
             if (!empty($tags)) {
                 $post->tags()->attach($tags);
             }
-            // al posto di attach posso usare anche sync()
+            // al posto di attach posso usare anche sync() = a attach e detach
         
         return redirect()->route('admin.posts.index');
     }
@@ -122,7 +122,7 @@ class PostController extends Controller
 
         $tags = $data['tags'];
         if (!empty($tags)) {
-            $post->tags()->attach($tags);
+            $post->tags()->sync($tags);
         }
         return redirect()->route('admin.posts.index');
     }

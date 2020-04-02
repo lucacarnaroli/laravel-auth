@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-            <form class="p-4" action="{{route('admin.posts.store')}}" method="post">
+            <form enctype="multipart/form-data" class="p-4" action="{{route('admin.posts.store')}}" method="post">
         @csrf
         @method('POST')
                 <div class="form-group">
@@ -22,6 +22,8 @@
                    @endforeach
                 </div>
 
+                <input type="file" name="img">
+
                 <button class="btn btn-primary" type="submit">Salva</button>  
             </form>
 @endsection
@@ -37,3 +39,4 @@
         <button type="submit">Salva</button>
     </form>
 @endsection --}}
+
