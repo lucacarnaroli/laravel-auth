@@ -24,5 +24,19 @@
         </tbody>
     </table>
 
+    <div class="form-group">
+        <h2 class="ml-4">Commenti: </h2>
+    @forelse ($post->comments as $comment)
+        <ul>
+            <li>Nome: {{$comment->name}}</li>
+            <li>Titolo: {{$comment->title}}</li>
+            <li>Email: {{$comment->email}}</li>
+            <li>Commento: {{$comment->body}}</li>
+        </ul>
+    @empty
+        <h5 class="ml-4">Nessun commento</h5>
+    @endforelse
+    </div>
+
 @endsection
 
