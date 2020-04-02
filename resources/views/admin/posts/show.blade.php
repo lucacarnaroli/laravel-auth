@@ -14,6 +14,7 @@
         </thead>
         <tbody>
                 <tr>
+                    <td><img src="{{asset('storage/' . $post->img)}}" alt=""></td>
                     <td>{{$post->id}}</td>
                     <td>{{$post->title}}</td>
                     <td>{{$post->body}}</td>

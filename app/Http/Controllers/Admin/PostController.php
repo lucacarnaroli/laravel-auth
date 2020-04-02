@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -52,12 +52,15 @@ class PostController extends Controller
             'body'=>'required|string|max:1000',
         ]);
         $data = $request->all();
-            
+
+        $path = Storage::disk('public')->put('images', $data['img']);
+
         $post = new Post;
+        $post->img = $path;
         $post->fill($data);
         $post->user_id = Auth::id();
         $post->slug = Str::finish(Str::slug($post->title), rand(1, 10000));
-
+        
         $post->save();
         
             $tags = $data['tags'];

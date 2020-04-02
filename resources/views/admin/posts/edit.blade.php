@@ -4,6 +4,7 @@
             <form class="p-4" action="{{route('admin.posts.update',$post)}}" method="post">
         @csrf
         @method('PATCH')
+                <img src="{{asset('storage/' . $post->img)}}" alt="">
                 <div class="form-group">
                     <label for="title">title</label>
                 <input class="form-control" type="text" name="title" placeholder="title" value="{{$post->title}}">
