@@ -4,13 +4,13 @@
             <form class="p-4" action="{{route('admin.posts.update',$post)}}" method="post">
         @csrf
         @method('PATCH')
-                <img src="{{asset('storage/' . $post->img)}}" alt="">
+                <img src="{{asset('storage/' . $post->img)}}" width="500" alt="">
                 <div class="form-group">
-                    <label for="title">title</label>
+                    <label for="title">Title</label>
                 <input class="form-control" type="text" name="title" placeholder="title" value="{{$post->title}}">
                  </div>
                 <div class="form-group">
-                    <label for="body">text</label>
+                    <label for="body">Text</label>
                     <textarea class="form-control" name="body" id="body" cols="30" rows="10">{{$post->body}}</textarea>
                 </div>
 
