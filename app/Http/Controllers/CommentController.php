@@ -45,6 +45,7 @@ class CommentController extends Controller
         if (!$saved) {
            return redirect()->back();
         }
+
         
         return redirect()->route('posts.show', $newComment->post->slug);
     }

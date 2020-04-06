@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use App\Mail\SendNewMail;
+use Illuminate\Support\Facades\Mail;
 
 class PostController extends Controller
 {
@@ -67,7 +69,9 @@ class PostController extends Controller
             if (!empty($tags)) {
                 $post->tags()->attach($tags);
             }
-            // al posto di attach posso usare anche sync() = a attach e detach
+        // al posto di attach posso usare anche sync() = a attach e detach
+
+        Mail::to('mail@mail.it')->send(new SendNewMail($post));
         
         return redirect()->route('admin.posts.index');
     }
